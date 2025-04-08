@@ -94,3 +94,6 @@ The website uses CSS modules for styling. Global variables and styles are define
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
+
+# Portfolio
+Portfolio for friend
