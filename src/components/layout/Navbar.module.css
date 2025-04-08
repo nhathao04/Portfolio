@@ -1,0 +1,106 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: flex-end;
+  padding: 1.5rem 2rem;
+  transition: all 0.3s ease;
+  margin-right: 280px; /* Match sidebar width */
+}
+
+.scrolled {
+  backdrop-filter: blur(10px);
+  background-color: rgba(10, 10, 19, 0.7);
+  padding: 1rem 2rem;
+}
+
+.navbarContent {
+  max-width: 1200px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.linksContainer {
+  display: flex;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.navLink {
+  font-size: var(--font-sm);
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  position: relative;
+  padding: 0.25rem 0;
+}
+
+.navLink:hover {
+  color: var(--foreground);
+}
+
+.navLink.active {
+  color: var(--foreground);
+}
+
+.navLink.active::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--foreground);
+}
+
+.actionButton {
+  margin-left: 2rem;
+}
+
+.talkButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1.2rem;
+  font-size: var(--font-sm);
+  font-weight: 500;
+  border-radius: 30px;
+  transition: all 0.3s ease;
+  background-color: rgba(255, 174, 196, 0.1); /* Pink-ish button */
+  color: var(--foreground);
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.talkButton:hover {
+  background-color: rgba(255, 174, 196, 0.2);
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    margin-right: 0;
+    justify-content: center;
+    padding: 1rem;
+  }
+  
+  .navbarContent {
+    justify-content: center;
+  }
+  
+  .linksContainer {
+    display: none;
+  }
+  
+  .actionButton {
+    margin-left: 0;
+  }
+} 

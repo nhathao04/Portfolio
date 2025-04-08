@@ -1,0 +1,45 @@
+.spotlightContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.spotlightEffect {
+  position: absolute;
+  width: 800px;
+  height: 800px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at center,
+    rgba(109, 74, 255, 0.15) 0%,
+    rgba(201, 97, 222, 0.1) 30%,
+    rgba(109, 74, 255, 0.05) 50%,
+    rgba(109, 74, 255, 0) 70%
+  );
+  will-change: transform;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  filter: blur(50px);
+}
+
+.mainSpotlight {
+  position: absolute;
+  width: 1000px;
+  height: 1000px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at center,
+    rgba(109, 74, 255, 0.12) 0%,
+    rgba(201, 97, 222, 0.08) 20%,
+    rgba(109, 74, 255, 0.04) 40%,
+    rgba(109, 74, 255, 0) 60%
+  );
+  pointer-events: none;
+  opacity: 0.6;
+  filter: blur(70px);
+} 

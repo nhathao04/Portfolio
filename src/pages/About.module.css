@@ -1,0 +1,364 @@
+.about {
+  padding: var(--spacing-lg) 0;
+}
+
+.header {
+  margin-bottom: var(--spacing-xl);
+}
+
+.title {
+  font-size: var(--font-3xl);
+  font-weight: 700;
+  margin-bottom: var(--spacing-sm);
+}
+
+.subtitle {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: var(--font-md);
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: var(--spacing-xl);
+  margin-bottom: var(--spacing-2xl);
+}
+
+.imageSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.mainImage {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.5);
+}
+
+.mainImage::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 3px;
+  background: linear-gradient(to right, var(--primary), var(--secondary));
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.mainImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.imageGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-sm);
+}
+
+.smallImage {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  aspect-ratio: 1;
+}
+
+.placeholderImage {
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(45deg, rgba(112, 0, 255, 0.2), rgba(0, 225, 255, 0.2));
+}
+
+.infoSection {
+  padding: var(--spacing-md);
+}
+
+.greeting {
+  font-size: var(--font-2xl);
+  font-weight: 600;
+  margin-bottom: var(--spacing-md);
+  position: relative;
+  display: inline-block;
+}
+
+.greeting::after {
+  content: '';
+  position: absolute;
+  bottom: -0.5rem;
+  left: 0;
+  width: 2.5rem;
+  height: 3px;
+  background: linear-gradient(to right, var(--primary), var(--secondary));
+  border-radius: var(--radius-full);
+}
+
+.bio {
+  font-size: var(--font-md);
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: var(--spacing-xl);
+}
+
+.quickInfo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-xl);
+  background-color: var(--card-background);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+}
+
+.infoItem {
+  display: flex;
+  flex-direction: column;
+}
+
+.infoLabel {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: var(--font-sm);
+  margin-bottom: var(--spacing-xs);
+}
+
+.skillsSection {
+  margin-top: var(--spacing-xl);
+}
+
+.skillsTitle {
+  font-size: var(--font-xl);
+  font-weight: 600;
+  margin-bottom: var(--spacing-lg);
+  position: relative;
+  display: inline-block;
+}
+
+.skillsTitle::after {
+  content: '';
+  position: absolute;
+  bottom: -0.5rem;
+  left: 0;
+  width: 2rem;
+  height: 3px;
+  background: linear-gradient(to right, var(--primary), var(--secondary));
+  border-radius: var(--radius-full);
+}
+
+.skills {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.skillItem {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-md);
+}
+
+.skillIcon {
+  width: 40px;
+  height: 40px;
+  background-color: rgba(112, 0, 255, 0.1);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.skillInfo {
+  flex: 1;
+}
+
+.skillNameLevel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-xs);
+}
+
+.skillName {
+  font-weight: 500;
+}
+
+.skillLevel {
+  font-size: var(--font-sm);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.skillBar {
+  height: 6px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.skillProgress {
+  height: 100%;
+  background: linear-gradient(to right, var(--primary), var(--secondary));
+  border-radius: var(--radius-full);
+}
+
+.statsSection {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-2xl);
+}
+
+.statItem {
+  background-color: var(--card-background);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.statNumber {
+  font-size: var(--font-2xl);
+  font-weight: 700;
+  background: linear-gradient(to right, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.statLabel {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: var(--font-sm);
+}
+
+@media (max-width: 1024px) {
+  .content {
+    grid-template-columns: 1fr;
+  }
+  
+  .imageSection {
+    margin-bottom: var(--spacing-xl);
+  }
+  
+  .statsSection {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .quickInfo {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .statsSection {
+    grid-template-columns: 1fr;
+  }
+}
+
+.carousel {
+  width: 100%;
+  height: 400px;
+  margin: var(--spacing-xl) 0;
+  position: relative;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+.carouselTrack {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.carouselSlide {
+  position: absolute;
+  width: 320px;
+  height: 220px;
+  transform-style: preserve-3d;
+  transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+  cursor: pointer;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.carouselSlide.active {
+  z-index: 5;
+}
+
+.carouselSlide::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, var(--primary), var(--secondary));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+}
+
+.carouselSlide:hover::before {
+  opacity: 0.2;
+}
+
+.carouselImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  transition: transform 0.5s ease;
+}
+
+.carouselSlide:hover .carouselImage {
+  transform: scale(1.05);
+}
+
+.carouselDots {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-lg);
+  position: relative;
+  z-index: 10;
+}
+
+.carouselDot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  padding: 0;
+}
+
+.carouselDot:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.carouselDot.activeDot {
+  width: 14px;
+  height: 14px;
+  background: linear-gradient(to right, var(--primary), var(--secondary));
+} 

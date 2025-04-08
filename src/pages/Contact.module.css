@@ -1,0 +1,240 @@
+.contact {
+  padding: var(--spacing-lg) 0;
+}
+
+.header {
+  margin-bottom: var(--spacing-xl);
+}
+
+.title {
+  font-size: var(--font-3xl);
+  font-weight: 700;
+  margin-bottom: var(--spacing-sm);
+}
+
+.subtitle {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: var(--font-md);
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: var(--spacing-xl);
+}
+
+.contactInfo {
+  height: 100%;
+}
+
+.infoContainer {
+  background-color: var(--card-background);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.infoTitle {
+  font-size: var(--font-xl);
+  font-weight: 600;
+  margin-bottom: var(--spacing-md);
+  position: relative;
+  display: inline-block;
+  padding-bottom: var(--spacing-sm);
+}
+
+.infoTitle::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 3rem;
+  height: 3px;
+  background: linear-gradient(to right, var(--primary), var(--secondary));
+  border-radius: var(--radius-full);
+}
+
+.infoSubtitle {
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: var(--spacing-xl);
+  line-height: 1.6;
+}
+
+.infoItems {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-xl);
+}
+
+.infoItem {
+  display: flex;
+  gap: var(--spacing-md);
+  align-items: flex-start;
+}
+
+.infoIcon {
+  width: 40px;
+  height: 40px;
+  background-color: rgba(112, 0, 255, 0.1);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--foreground);
+  flex-shrink: 0;
+}
+
+.infoContent {
+  display: flex;
+  flex-direction: column;
+}
+
+.infoLabel {
+  font-size: var(--font-sm);
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: var(--spacing-xs);
+}
+
+.infoValue {
+  font-weight: 500;
+  color: var(--foreground);
+  transition: color 0.3s ease;
+}
+
+a.infoValue:hover {
+  color: var(--secondary);
+}
+
+.socialLinks {
+  margin-top: auto;
+}
+
+.socialTitle {
+  font-size: var(--font-md);
+  font-weight: 600;
+  margin-bottom: var(--spacing-md);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.socialIcons {
+  display: flex;
+  gap: var(--spacing-md);
+}
+
+.socialLink {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.formContainer {
+  background-color: var(--card-background);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.formTitle {
+  font-size: var(--font-xl);
+  font-weight: 600;
+  margin-bottom: var(--spacing-xl);
+  position: relative;
+  display: inline-block;
+  padding-bottom: var(--spacing-sm);
+}
+
+.formTitle::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 3rem;
+  height: 3px;
+  background: linear-gradient(to right, var(--primary), var(--secondary));
+  border-radius: var(--radius-full);
+}
+
+.successMessage {
+  background-color: rgba(46, 213, 115, 0.2);
+  color: rgba(46, 213, 115, 1);
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--spacing-lg);
+  font-weight: 500;
+}
+
+.formGroup {
+  margin-bottom: var(--spacing-lg);
+}
+
+.label {
+  display: block;
+  margin-bottom: var(--spacing-xs);
+  font-size: var(--font-sm);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.input, .textarea {
+  width: 100%;
+  padding: var(--spacing-md);
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-md);
+  color: var(--foreground);
+  font-size: var(--font-md);
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.input:focus, .textarea:focus {
+  outline: none;
+  border-color: rgba(112, 0, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.07);
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.submitBtn {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: 0.7rem 1.8rem;
+  background-color: rgba(112, 0, 255, 0.2);
+  color: var(--foreground);
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: var(--font-md);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.submitBtn:hover {
+  background-color: rgba(112, 0, 255, 0.3);
+}
+
+.submitBtn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .content {
+    grid-template-columns: 1fr;
+  }
+  
+  .contactInfo {
+    margin-bottom: var(--spacing-xl);
+  }
+} 
