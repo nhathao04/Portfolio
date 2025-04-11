@@ -1,10 +1,14 @@
 .guestBook {
-  max-width: 800px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: var(--spacing-xl) var(--spacing-md);
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: var(--spacing-xl);
 }
 
 .header {
+  grid-column: 1 / -1;
   text-align: center;
   margin-bottom: var(--spacing-2xl);
 }
@@ -23,9 +27,11 @@
   background: var(--card-background);
   padding: var(--spacing-xl);
   border-radius: var(--radius-lg);
-  margin-bottom: var(--spacing-2xl);
   border: 1px solid var(--border-color);
   backdrop-filter: blur(10px);
+  position: sticky;
+  top: var(--spacing-xl);
+  height: fit-content;
 }
 
 .formGroup {
@@ -104,13 +110,13 @@
 }
 
 .commentsSection {
-  margin-top: var(--spacing-2xl);
+  margin-top: 0;
 }
 
 .commentsTitle {
   font-size: var(--font-xl);
   margin-bottom: var(--spacing-xl);
-  text-align: center;
+  text-align: left;
 }
 
 .loading,
@@ -161,44 +167,6 @@
   color: var(--foreground);
   line-height: 1.6;
   white-space: pre-wrap;
-}
-
-@media (max-width: 768px) {
-  .guestBook {
-    padding: var(--spacing-lg) var(--spacing-md);
-  }
-
-  .title {
-    font-size: var(--font-2xl);
-  }
-
-  .subtitle {
-    font-size: var(--font-md);
-  }
-
-  .form {
-    padding: var(--spacing-lg);
-  }
-
-  .commentCard {
-    padding: var(--spacing-md);
-  }
-}
-
-@media (max-width: 480px) {
-  .guestBook {
-    padding: var(--spacing-md);
-  }
-
-  .commentHeader {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--spacing-xs);
-  }
-
-  .commentDate {
-    font-size: var(--font-xs);
-  }
 }
 
 .pagination {
@@ -264,4 +232,54 @@
   color: var(--foreground-secondary);
   margin-left: var(--spacing-sm);
   font-weight: normal;
+}
+
+@media (max-width: 1024px) {
+  .guestBook {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-2xl);
+  }
+
+  .form {
+    position: static;
+    order: -1;
+  }
+}
+
+@media (max-width: 768px) {
+  .guestBook {
+    padding: var(--spacing-lg) var(--spacing-md);
+  }
+
+  .title {
+    font-size: var(--font-2xl);
+  }
+
+  .subtitle {
+    font-size: var(--font-md);
+  }
+
+  .form {
+    padding: var(--spacing-lg);
+  }
+
+  .commentCard {
+    padding: var(--spacing-md);
+  }
+}
+
+@media (max-width: 480px) {
+  .guestBook {
+    padding: var(--spacing-md);
+  }
+
+  .commentHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-xs);
+  }
+
+  .commentDate {
+    font-size: var(--font-xs);
+  }
 } 

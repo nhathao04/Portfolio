@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Home, Briefcase, User, FileText, Mail, Camera, Twitter, Instagram, Linkedin, Github, Facebook, Menu, X } from 'lucide-react';
+import { Home, Briefcase, User, Camera, Mail, Instagram, Facebook, Menu, X, ZoomIn } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import styles from './Sidebar.module.css';
 import avatar from '../../assets/avatar.jpg';
@@ -8,6 +8,8 @@ const Sidebar = () => {
   const location = useLocation();
   const [theme, setTheme] = useState('dark');
   const [isOpen, setIsOpen] = useState(false);
+  const [isAvatarModalOpen, setIsAvatarModalOpen] = useState(false);
+  const [isProcessingToggle, setIsProcessingToggle] = useState(false);
 
   useEffect(() => {
     // Get initial theme from localStorage or system preference
@@ -24,13 +26,36 @@ const Sidebar = () => {
     };
 
     document.addEventListener('click', handleClickOutside);
-    return () => document.removeEventListener('click', handleClickOutside);
-  }, [isOpen]);
+    
+    // Add event listener to close modal with Escape key
+    const handleEscKey = (event) => {
+      if (event.key === 'Escape' && isAvatarModalOpen) {
+        setIsAvatarModalOpen(false);
+      }
+    };
+    
+    document.addEventListener('keydown', handleEscKey);
+    
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+      document.removeEventListener('keydown', handleEscKey);
+      setIsProcessingToggle(false);
+    };
+  }, [isOpen, isAvatarModalOpen]);
 
   // Close sidebar when route changes on mobile
   useEffect(() => {
     setIsOpen(false);
   }, [location]);
+
+  useEffect(() => {
+    // Prevent scrolling when modal is open
+    if (isAvatarModalOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+  }, [isAvatarModalOpen]);
 
   const toggleTheme = () => {
     const newTheme = theme === 'dark' ? 'light' : 'dark';
@@ -39,17 +64,39 @@ const Sidebar = () => {
     localStorage.setItem('theme', newTheme);
   };
 
-  const toggleSidebar = () => {
+  const toggleSidebar = (e) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    
+    // Nếu đang xử lý một toggle, bỏ qua
+    if (isProcessingToggle) return;
+    
+    // Đánh dấu đang xử lý
+    setIsProcessingToggle(true);
+    
+    // Thay đổi trạng thái sidebar
     setIsOpen(!isOpen);
+    
+    // Sau khi hoàn thành, đặt lại trạng thái xử lý
+    setTimeout(() => {
+      setIsProcessingToggle(false);
+    }, 300);
+  };
+
+  const openAvatarModal = () => {
+    setIsAvatarModalOpen(true);
+  };
+
+  const closeAvatarModal = () => {
+    setIsAvatarModalOpen(false);
   };
 
   const navigationLinks = [
     { path: '/', icon: <Home size={20} />, label: 'Home' },
-    { path: '/portfolio', icon: <Briefcase size={20} />, label: 'Portfolio' },
     { path: '/about', icon: <User size={20} />, label: 'About Me' },
     { path: '/life-snaps', icon: <Camera size={20} />, label: 'Life Snaps' },
-    { path: '/resume', icon: <FileText size={20} />, label: 'Resume' },
-    { path: '/contact', icon: <Mail size={20} />, label: 'Contact' },
     { path: '/guestbook', icon: <Mail size={20} />, label: 'Guestbook' },
   ];
 
@@ -72,12 +119,21 @@ const Sidebar = () => {
 
       <aside className={`${styles.sidebar} ${isOpen ? styles.open : ''}`}>
         <div className={styles.profile}>
-          <div className={styles.avatarContainer}>
+          <div 
+            className={styles.avatarContainer}
+            onClick={openAvatarModal}
+            role="button"
+            tabIndex={0}
+            aria-label="Open profile picture"
+          >
             <img 
               src={avatar}
               alt="Profile" 
               className={styles.avatar}
             />
+            <div className={styles.avatarOverlay}>
+              <ZoomIn size={24} />
+            </div>
           </div>
           <h1 className={styles.name}>Thanh Tuyen</h1>
           <p className={styles.title}>🎓 University student</p>
@@ -136,8 +192,25 @@ const Sidebar = () => {
           </button>
         </div>
       </aside>
+
+      {/* Avatar Modal */}
+      {isAvatarModalOpen && (
+        <div className={styles.avatarModal} onClick={closeAvatarModal}>
+          <div className={styles.avatarModalContent} onClick={(e) => e.stopPropagation()}>
+            <button className={styles.closeButton} onClick={closeAvatarModal} aria-label="Close modal">
+              <X size={24} />
+            </button>
+            <img 
+              src={avatar} 
+              alt="Profile" 
+              className={styles.avatarLarge}
+            />
+            <h2 className={styles.modalName}>Thanh Tuyen</h2>
+          </div>
+        </div>
+      )}
     </>
   );
 };
 
-export default Sidebar; 
+export default Sidebar;

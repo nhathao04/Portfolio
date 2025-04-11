@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Send, Loader, ChevronLeft, ChevronRight } from 'lucide-react';
 import styles from './GuestBook.module.css';
 
-const API_URL = 'http://localhost:3000';
+const API_URL = 'http://nhathao.info.vn/api';
 const COMMENTS_PER_PAGE = 10;
 
 const GuestBook = () => {
@@ -46,7 +46,7 @@ const GuestBook = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.message) {
+    if ( !formData.message) {
       setError('Name and message are required');
       return;
     }
@@ -156,6 +156,53 @@ const GuestBook = () => {
         <p className={styles.subtitle}>Leave a message for future visitors!</p>
       </header>
 
+      <section className={styles.commentsSection}>
+        <h2 className={styles.commentsTitle}>
+          Messages
+          {comments.length > 0 && (
+            <span className={styles.commentCount}>
+              ({comments.length} {comments.length === 1 ? 'message' : 'messages'})
+            </span>
+          )}
+        </h2>
+        {isLoading ? (
+          <div className={styles.loading}>
+            <Loader className={styles.spinner} size={30} />
+            Loading comments...
+          </div>
+        ) : comments.length === 0 ? (
+          <div className={styles.noComments}>
+            No messages yet. Be the first to write one!
+          </div>
+        ) : (
+          <>
+            <div id="comments-list" className={styles.commentsList}>
+              <AnimatePresence mode="wait">
+                {currentComments.map((comment) => (
+                  <motion.div
+                    key={comment.id}
+                    className={styles.commentCard}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <div className={styles.commentHeader}>
+                      <span className={styles.commentAuthor}>{comment.name}</span>
+                      <span className={styles.commentDate}>
+                        {formatDate(comment.createdAt)}
+                      </span>
+                    </div>
+                    <p className={styles.commentMessage}>{comment.message}</p>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </div>
+            {renderPagination()}
+          </>
+        )}
+      </section>
+
       <form onSubmit={handleSubmit} className={styles.form}>
         <div className={styles.formGroup}>
           <input
@@ -207,53 +254,6 @@ const GuestBook = () => {
           )}
         </button>
       </form>
-
-      <section className={styles.commentsSection}>
-        <h2 className={styles.commentsTitle}>
-          Messages
-          {comments.length > 0 && (
-            <span className={styles.commentCount}>
-              ({comments.length} {comments.length === 1 ? 'message' : 'messages'})
-            </span>
-          )}
-        </h2>
-        {isLoading ? (
-          <div className={styles.loading}>
-            <Loader className={styles.spinner} size={30} />
-            Loading comments...
-          </div>
-        ) : comments.length === 0 ? (
-          <div className={styles.noComments}>
-            No messages yet. Be the first to write one!
-          </div>
-        ) : (
-          <>
-            <div id="comments-list" className={styles.commentsList}>
-              <AnimatePresence mode="wait">
-                {currentComments.map((comment) => (
-                  <motion.div
-                    key={comment.id}
-                    className={styles.commentCard}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <div className={styles.commentHeader}>
-                      <span className={styles.commentAuthor}>{comment.name}</span>
-                      <span className={styles.commentDate}>
-                        {formatDate(comment.createdAt)}
-                      </span>
-                    </div>
-                    <p className={styles.commentMessage}>{comment.message}</p>
-                  </motion.div>
-                ))}
-              </AnimatePresence>
-            </div>
-            {renderPagination()}
-          </>
-        )}
-      </section>
     </motion.div>
   );
 };
