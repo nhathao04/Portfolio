@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Send, Loader, ChevronLeft, ChevronRight } from 'lucide-react';
 import styles from './GuestBook.module.css';
 
-const API_URL = 'http://nhathao.info.vn/api';
+const API_URL = 'http://localhost:3000'; // Replace with your API URL
 const COMMENTS_PER_PAGE = 10;
 
 const GuestBook = () => {
