@@ -11,7 +11,7 @@ export default defineConfig({
     host: "0.0.0.0",
     port: 5173,
     hmr: {
-      host: "nhathao.info.vn",
+      host: "thanhtuyen.info.vn",
       protocol: "ws",
       clientPort: 443,
     },
