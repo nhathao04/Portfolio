@@ -2,8 +2,9 @@
   padding: var(--spacing-lg) var(--spacing-md);
   max-width: 1200px;
   margin: 0 auto;
-  pointer-events: auto; /* Cho phép tương tác */
+  pointer-events: auto; /* Allow interaction */
   z-index: 0;
+  touch-action: pan-y; /* Allow vertical touch scrolling but not horizontal */
 }
 
 .header {
@@ -138,6 +139,8 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: var(--spacing-lg);
+  overscroll-behavior: contain; /* Prevent scroll chaining */
+  touch-action: pan-y; /* Allow vertical touch scrolling */
 }
 
 .imageContainer {
@@ -149,6 +152,7 @@
   aspect-ratio: 1;
   transform-origin: center bottom;
   will-change: transform, box-shadow;
+  touch-action: manipulation; /* Improves touch handling */
 }
 
 .imageWrapper {
@@ -319,4 +323,4 @@
   100% {
     transform: translateY(0px);
   }
-} 
+}

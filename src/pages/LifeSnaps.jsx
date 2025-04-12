@@ -15,7 +15,6 @@ import friend9 from '../assets/friends/9.jpg';
 import friend10 from '../assets/friends/10.jpg';
 import friend11 from '../assets/friends/11.jpg';
 
-
 import school1 from '../assets/school/1.jpg';
 import school2 from '../assets/school/2.jpg';
 import school3 from '../assets/school/3.jpg';
@@ -31,18 +30,17 @@ import aolen5 from '../assets/solo/8.jpg';
 import aolen6 from '../assets/solo/9.jpg';
 import aolen7 from '../assets/solo/10.jpg';
 
-
-
 const LifeSnaps = () => {
   const [activeCategory, setActiveCategory] = useState('Friends');
   const [selectedImage, setSelectedImage] = useState(null);
+  const [touchStartY, setTouchStartY] = useState(0);
+  const [touchStartX, setTouchStartX] = useState(0);
   
   const categories = ['Home', 'School', 'Friends'];
-  const handleInteraction = (callback) => (event) => {
-    if (event.type !== "touchstart") {
-      event.preventDefault(); // Chỉ ngăn chặn với các sự kiện không phải touchstart
-    }
-    callback();
+  
+  // Handle category selection
+  const handleCategoryClick = (category) => {
+    setActiveCategory(category);
   };
   
   // Static image data grouped by category
@@ -79,12 +77,35 @@ const LifeSnaps = () => {
     ]
   };
 
+  // Touch handlers for images
+  const handleTouchStart = (e, image) => {
+    // Record the start position
+    setTouchStartY(e.touches[0].clientY);
+    setTouchStartX(e.touches[0].clientX);
+  };
+
+  const handleTouchEnd = (e, image) => {
+    // Only trigger selection if it wasn't a significant vertical movement (scroll)
+    const touchEndY = e.changedTouches[0].clientY;
+    const touchEndX = e.changedTouches[0].clientX;
+    
+    // Calculate distance moved
+    const yDiff = Math.abs(touchEndY - touchStartY);
+    const xDiff = Math.abs(touchEndX - touchStartX);
+    
+    // If vertical movement is minimal and horizontal movement is minimal, consider it a tap
+    if (yDiff < 10 && xDiff < 10) {
+      handleImageClick(image);
+    }
+  };
+
   const handleImageClick = (image) => {
     setSelectedImage(selectedImage?.id === image.id ? null : image);
   };
 
   const filteredImages = allImages[activeCategory] || [];
 
+  // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: { 
@@ -176,19 +197,18 @@ const LifeSnaps = () => {
       </motion.div>
 
       <div className={styles.categoryTabs}>
-  {categories.map((category) => (
-    <motion.button
-      key={category}
-      className={`${styles.categoryTab} ${activeCategory === category ? styles.activeTab : ''}`}
-      onClick={handleInteraction(() => setActiveCategory(category))}
-      onTouchStart={handleInteraction(() => setActiveCategory(category))}
-      whileHover={{ y: -4, transition: { type: "spring", stiffness: 400 } }}
-      whileTap={{ scale: 0.95 }}
-    >
-      {category}
-    </motion.button>
-  ))}
-</div>
+        {categories.map((category) => (
+          <motion.button
+            key={category}
+            className={`${styles.categoryTab} ${activeCategory === category ? styles.activeTab : ''}`}
+            onClick={() => handleCategoryClick(category)}
+            whileHover={{ y: -4, transition: { type: "spring", stiffness: 400 } }}
+            whileTap={{ scale: 0.95 }}
+          >
+            {category}
+          </motion.button>
+        ))}
+      </div>
 
       <motion.div 
         className={styles.gallery}
@@ -201,30 +221,31 @@ const LifeSnaps = () => {
           <div className={styles.gridView}>
             {filteredImages.map((image) => (
               <motion.div
-  key={image.id}
-  className={styles.imageContainer}
-  variants={itemVariants}
-  whileHover="hover"
-  onClick={handleInteraction(() => handleImageClick(image))}
-  onTouchStart={handleInteraction(() => handleImageClick(image))}
-  whileTap={{ scale: 0.95 }} // Hiệu ứng khi chạm
->
-  <div className={styles.imageWrapper}>
-    <motion.img 
-      src={image.src} 
-      alt={image.alt} 
-      className={styles.image}
-      variants={imageVariants}
-    />
-    <motion.div 
-      className={styles.imageOverlay}
-      variants={overlayVariants}
-      initial="initial"
-    >
-      <p className={styles.description}>{image.description}</p>
-    </motion.div>
-  </div>
-</motion.div>
+                key={image.id}
+                className={styles.imageContainer}
+                variants={itemVariants}
+                whileHover="hover"
+                onClick={() => handleImageClick(image)}
+                onTouchStart={(e) => handleTouchStart(e, image)}
+                onTouchEnd={(e) => handleTouchEnd(e, image)}
+                whileTap={{ scale: 0.95 }}
+              >
+                <div className={styles.imageWrapper}>
+                  <motion.img 
+                    src={image.src} 
+                    alt={image.alt} 
+                    className={styles.image}
+                    variants={imageVariants}
+                  />
+                  <motion.div 
+                    className={styles.imageOverlay}
+                    variants={overlayVariants}
+                    initial="initial"
+                  >
+                    <p className={styles.description}>{image.description}</p>
+                  </motion.div>
+                </div>
+              </motion.div>
             ))}
           </div>
         ) : (
@@ -235,68 +256,66 @@ const LifeSnaps = () => {
       </motion.div>
 
       <AnimatePresence>
-  {selectedImage && (
-    <motion.div
-      className={styles.modal}
-      variants={modalVariants}
-      initial="hidden"
-      animate="visible"
-      exit="exit"
-      onClick={handleInteraction(() => setSelectedImage(null))}
-      onTouchStart={handleInteraction(() => setSelectedImage(null))}
-    >
-      <motion.div
-        className={styles.modalContent}
-        variants={modalContentVariants}
-        onClick={(e) => e.stopPropagation()}
-        onTouchStart={(e) => e.stopPropagation()}
-      >
-        <motion.img 
-          src={selectedImage.src} 
-          alt={selectedImage.alt} 
-          className={styles.modalImage}
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ 
-            opacity: 1, 
-            scale: 1,
-            transition: { delay: 0.2, duration: 0.3 }
-          }}
-        />
-        <motion.div 
-          className={styles.modalInfo}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ 
-            opacity: 1, 
-            y: 0,
-            transition: { delay: 0.3, duration: 0.3 }
-          }}
-        >
-          <span className={styles.modalCategory}>{selectedImage.category}</span>
-          <p className={styles.modalDescription}>{selectedImage.description}</p>
-        </motion.div>
-        <motion.button 
-          className={styles.closeButton}
-          onClick={handleInteraction(() => setSelectedImage(null))}
-          initial={{ opacity: 0, rotate: -90 }}
-          animate={{ 
-            opacity: 1, 
-            rotate: 0,
-            transition: { delay: 0.3, duration: 0.3 }
-          }}
-          whileHover={{ 
-            rotate: 90,
-            scale: 1.1,
-            backgroundColor: "var(--primary)"
-          }}
-        >
-          ×
-        </motion.button>
-      </motion.div>
-    </motion.div>
-  )}
-</AnimatePresence>
+        {selectedImage && (
+          <motion.div
+            className={styles.modal}
+            variants={modalVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            onClick={() => setSelectedImage(null)}
+          >
+            <motion.div
+              className={styles.modalContent}
+              variants={modalContentVariants}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <motion.img 
+                src={selectedImage.src} 
+                alt={selectedImage.alt} 
+                className={styles.modalImage}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ 
+                  opacity: 1, 
+                  scale: 1,
+                  transition: { delay: 0.2, duration: 0.3 }
+                }}
+              />
+              <motion.div 
+                className={styles.modalInfo}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ 
+                  opacity: 1, 
+                  y: 0,
+                  transition: { delay: 0.3, duration: 0.3 }
+                }}
+              >
+                <span className={styles.modalCategory}>{selectedImage.category}</span>
+                <p className={styles.modalDescription}>{selectedImage.description}</p>
+              </motion.div>
+              <motion.button 
+                className={styles.closeButton}
+                onClick={() => setSelectedImage(null)}
+                initial={{ opacity: 0, rotate: -90 }}
+                animate={{ 
+                  opacity: 1, 
+                  rotate: 0,
+                  transition: { delay: 0.3, duration: 0.3 }
+                }}
+                whileHover={{ 
+                  rotate: 90,
+                  scale: 1.1,
+                  backgroundColor: "var(--primary)"
+                }}
+              >
+                ×
+              </motion.button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
 
-export default LifeSnaps; 
+export default LifeSnaps;
