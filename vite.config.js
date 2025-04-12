@@ -1,19 +1,18 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
 
-// https://vite.dev/config/
 export default defineConfig({
+  base: '/happy-birthday-TT/',
   plugins: [react()],
-  define: {
-    "process.env": process.env,
-  },
   server: {
-    host: "0.0.0.0",
+    host: '0.0.0.0',
     port: 5173,
-    hmr: {
-      host: "nhathao.info.vn",
-      protocol: "ws",
-      clientPort: 443,
+    proxy: {
+      '/api': {
+        target: 'http://nhathao.info.vn', // backend domain
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '/api'),
+      },
     },
   },
 });

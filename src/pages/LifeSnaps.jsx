@@ -39,7 +39,9 @@ const LifeSnaps = () => {
   
   const categories = ['Home', 'School', 'Friends'];
   const handleInteraction = (callback) => (event) => {
-    event.preventDefault(); // Ngăn chặn xung đột giữa các sự kiện
+    if (event.type !== "touchstart") {
+      event.preventDefault(); // Chỉ ngăn chặn với các sự kiện không phải touchstart
+    }
     callback();
   };
   
